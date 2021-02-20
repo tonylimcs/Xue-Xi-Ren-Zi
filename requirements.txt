@@ -1,1 +1,3 @@
-g2pc
+g2pc~=0.9.9.3
+PyQt5
+PySide6~=6.0.1
