@@ -1,3 +1,5 @@
 .idea/
 venv/
 *.pyc
+engine/test.py
+gui/test.py
