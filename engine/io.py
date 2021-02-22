@@ -19,3 +19,13 @@ def get_user_db(file_path):
     """
     with open(file_path) as f:
         return json.load(f)
+
+
+def update_user_db(file_path, user_db):
+    """
+    Update user database
+    :param file_path: path of the user database (.json)
+    :param user_db: dictionary of updated user data
+    """
+    with open(file_path, 'w') as f:
+        json.dump(user_db, f)
