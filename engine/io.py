@@ -19,6 +19,3 @@ def get_user_db(file_path):
     """
     with open(file_path) as f:
         return json.load(f)
-
-
-print(get_user_db("../database/user.json"))
