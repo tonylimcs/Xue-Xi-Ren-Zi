@@ -1,6 +1,6 @@
 from constants import diacritical as dia
 import re
-from utils import is_chinese
+from utils import is_chinese, split_chinese
 
 english = re.compile(u'[A-Za-z]+( [A-Za-z]+)*')
 
@@ -26,19 +26,20 @@ def get_pinyin(data: list):
     """
     Retrieve pinyin from data
     """
-    pinyin_full, pinyin_only = [], []
+    pinyin_full, pinyin_only, chars_only = [], [], []
     for tup in data:
         try:
             if is_chinese(tup[0]):
                 tup_split = tup[2].split()
                 pinyin_only += [char for char in tup_split]     # flatten the list
                 pinyin_full.append(tuple(tup_split))            # pinyin indicated by tuple
+                chars_only += split_chinese(tup[0])
             else:
                 pinyin_full.append(tup[0])
         except IndexError:
             continue
 
-    return pinyin_full, pinyin_only
+    return pinyin_full, pinyin_only, chars_only
 
 
 def num2dia(word: str) -> str:
@@ -68,12 +69,13 @@ def num2dia(word: str) -> str:
     return word
 
 
-def postprocess(pinyin_full: list, eng_data: list, numerical=False) -> str:
+def tokenize(pinyin_full: list, chars_only: list, eng_data: list) -> list:
     """
     Concatenate all pinyin and rejoin English words according to the original string
     """
-    new_str = ''
+    tokens = []
     pos = 0
+    char_id = 0
     for i, obj in enumerate(pinyin_full):
         try:
             is_english = eng_data[0][0] == pos
@@ -86,45 +88,17 @@ def postprocess(pinyin_full: list, eng_data: list, numerical=False) -> str:
             eng = eng_data.pop(0)
             eng_word = eng[1]
 
-            new_str += eng_word
+            tokens.append(eng_word)
             pos += len(eng_word)
-            if is_pinyin:
-                new_str += ' '
 
         if is_pinyin:
-            # concatenate pinyin
-            if not numerical:
-                tmp = []
-                for j, py in enumerate(obj):
-                    tmp.append(num2dia(py))
-                    pos += 1
-                obj = tmp
-
-            obj = ''.join(obj)
+            for j in range(len(obj)):
+                tokens.append(chars_only[char_id])
+                pos += 1
+                char_id += 1
         else:
             # concatenate numbers or punctuations
             pos += 1
+            tokens.append(obj)
 
-        new_str += obj
-
-        # add whitespace between non-tuple pinyin or English words or numbers
-        try:
-            next_obj = pinyin_full[i + 1]
-            next_is_pinyin = type(next_obj) is tuple
-            next_is_number = re.match(r'\d', next_obj)
-        except TypeError:
-            next_is_number = False  # next object's data type is not a string
-        except IndexError:
-            next_is_pinyin, next_is_number = False, False   # end of list
-
-        try:
-            next_is_english = eng_data[0][0] == pos
-        except IndexError:
-            next_is_english = False
-
-        if (is_pinyin or re.match(r'\d', obj)) and (next_is_pinyin or next_is_english):
-            new_str += ' '
-        elif is_pinyin and next_is_number:
-            new_str += ' '
-
-    return new_str
+    return tokens
