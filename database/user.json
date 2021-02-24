@@ -1,8 +1,12 @@
 {
   "learned":
   {
-    "被": "bei4"
+    "被": ["bei4"],
+    "年": ["nian2"]
   },
-  "learning": [],
+  "learning":
+  {
+    "汶": ["wen4"]
+  },
   "articles": 0
 }
