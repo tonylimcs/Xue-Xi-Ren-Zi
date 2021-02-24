@@ -5,7 +5,7 @@ from gui.font.constants import STYLE, BODY_SIZE
 
 
 class Label(QLabel):
-    def __init__(self, parent, text):
+    def __init__(self, parent):
         super().__init__(parent)
 
         # setting alignment to the text
@@ -17,11 +17,9 @@ class Label(QLabel):
         # setting text font
         self.setFont(QFont(STYLE, BODY_SIZE))
 
-        self.setText(text)
-
 
 class Body(QScrollArea):
-    def __init__(self, text):
+    def __init__(self):
         super().__init__()
 
         # making widget resizable
@@ -34,7 +32,7 @@ class Body(QScrollArea):
         # vertical box layout
         lay = QVBoxLayout(content)
 
-        self.label = Label(content, text)
+        self.label = Label(content)
 
         # adding label to the layout
         lay.addWidget(self.label)
