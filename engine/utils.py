@@ -1,4 +1,6 @@
+from engine.constants import diacritical as dia
 import re
+
 
 chinese = re.compile(u'[\u4e00-\u9fff]')
 
@@ -19,3 +21,29 @@ def split_chinese(string: str) -> list:
     :return: list of Chinese characters
     """
     return chinese.findall(string)
+
+
+def num2dia(pinyin: str) -> str:
+    """
+    Convert tone representation: numerical -> diacritical
+    :param pinyin: pinyin of a Chinese character
+    :return: diacritical format of the pinyin
+    """
+    has_tone = re.match(r"\d{1,5}", pinyin[-1])
+    is_special = re.search('(?<=i)u', pinyin)
+    if len(pinyin) > 1 and has_tone:
+        tone = int(pinyin[-1])
+        pinyin = pinyin[:-1]
+        if tone == 5:
+            # neutral tone
+            pass
+        elif is_special:
+            # special case
+            pinyin = pinyin.replace('u', dia[tone - 1][4])
+        else:
+            for i, vowel in enumerate(['a', 'e', 'i', 'o', 'u']):
+                if vowel in pinyin:
+                    pinyin = pinyin.replace(vowel, dia[tone - 1][i])
+                    break
+
+    return pinyin
