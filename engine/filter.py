@@ -2,7 +2,11 @@ from engine.utils import is_chinese
 
 
 def update_learning(char, pinyin, learning, repeat):
-    learning[char] = {pinyin: repeat}
+    if char not in learning:
+        # Initialize
+        learning[char] = {}
+
+    learning[char][pinyin] = repeat
 
 
 def filter_pos(user_db, tokens, py_list):
