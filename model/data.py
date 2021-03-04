@@ -30,14 +30,14 @@ class Data:
         if is_correct:
             self.user["learning"][char][pinyin] -= 1
             counter = self.user["learning"][char][pinyin]
-            print(f"**Correct!\n{char}({pinyin}): {counter}")
+            print(f"**Correct!\n{char}({pinyin}): {counter}**")
 
             if counter == 0:
                 self.update_learned(char, pinyin)
         else:
             self.user["learning"][char][pinyin] = self.user["repeat"]  # Reset counter
             counter = self.user["learning"][char][pinyin]
-            print(f"**Wrong. Reset counter.\n{char}[{pinyin}]: {counter}")
+            print(f"**Wrong. Reset counter.\n{char}[{pinyin}]: {counter}**")
 
     def update_learned(self, char, pinyin):
         if char not in self.user["learned"]:
@@ -52,6 +52,9 @@ class Data:
         del self.user["learning"][char][pinyin]
         if len(self.user["learning"][char]) == 0:
             del self.user["learning"][char]
+
+    def update_json(self):
+        update_user_db(USER_JSON, self.user)
 
 
 data = Data()

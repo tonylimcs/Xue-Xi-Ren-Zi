@@ -29,10 +29,12 @@ def update_learning(user_input: str, hint_widget: QWidget, body_widget: QWidget)
     is_correct, cur_char, cur_pinyin = check_correct(user_input, data.learning_pos, data.tokens)
     data.update_counter(cur_char, cur_pinyin, is_correct)
 
-    next_char = None
     if len(data.learning_pos) > 0:
         next_pos = data.learning_pos[0][0]
         next_char = data.tokens[next_pos]
+    else:
+        data.update_json()
+        next_char = None
 
     data.text = update_format(data.text, cur_char, cur_pinyin, next_char, is_correct)
     update_text_gui((hint_widget, next_char),
