@@ -33,7 +33,7 @@ def update_learning(user_input: str, hint_widget: QWidget, body_widget: QWidget)
         next_pos = data.learning_pos[0][0]
         next_char = data.tokens[next_pos]
     else:
-        data.update_json()
+        data.update_json()  # Update user.json file in the end
         next_char = None
 
     data.text = update_format(data.text, cur_char, cur_pinyin, next_char, is_correct)
