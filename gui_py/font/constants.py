@@ -1,0 +1,2 @@
+STYLE = 'Arial'
+BODY_SIZE = 15
