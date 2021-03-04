@@ -17,8 +17,13 @@ def get_user_db(file_path):
     :param file_path: path of the user database (.json)
     :return: dictionary of user data
     """
-    with open(file_path, encoding='utf-8') as f:
-        return json.load(f)
+    try:
+        with open(file_path, "r", encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        # Initialize user database
+        return {"learned": {}, "learning": {},
+                "articles": 0, "repeat": 5}
 
 
 def update_user_db(file_path, user_db):
@@ -27,5 +32,5 @@ def update_user_db(file_path, user_db):
     :param file_path: path of the user database (.json)
     :param user_db: dictionary of updated user data
     """
-    with open(file_path, 'w', encoding='utf-8') as f:
+    with open(file_path, 'w') as f:
         json.dump(user_db, f)
