@@ -2,7 +2,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
 
-from gui_py.top_frame import TopFrame
+from gui.top_frame import TopFrame
 
 
 class MainWindow(QMainWindow):

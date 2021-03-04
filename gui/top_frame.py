@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
-from gui_py.widgets.body import Body
-from gui_py.widgets.pinyin_input import PinyinInput
+from gui.widgets.body import Body
+from gui.widgets.pinyin_input import PinyinInput
 
 from model.update_gui import update_learning, init_body, init_hint
 

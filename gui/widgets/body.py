@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
-from gui_py.font.constants import BODY_SIZE
+from gui.font.constants import BODY_SIZE
 
 
 class Label(QLabel):

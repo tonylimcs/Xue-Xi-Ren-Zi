@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
-from gui_py.font.constants import STYLE, BODY_SIZE
+from gui.font.constants import STYLE, BODY_SIZE
 
 pinyin_regex = r'^[A-Za-z]{1,5}[1-5]?$'
 
