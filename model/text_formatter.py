@@ -74,7 +74,7 @@ def init_format(tokens: list, unseen: list, learning: list) -> str:
         elif l_idx < len(learning) and i == learning[l_idx][0]:
             cur = LEARNING
 
-        if cur != '':
+        if cur:
             if cur == UNSEEN:
                 # show pinyin for "unseen" chars
                 unseen_char = unseen[u_idx][1]
