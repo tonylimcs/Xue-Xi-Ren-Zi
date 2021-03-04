@@ -12,17 +12,17 @@ def update_text_gui(*args):
             arg[0].setText(arg[1])
 
 
-def init_body(widget):
+def init_body(widget: QWidget):
     update_text_gui((widget, data.text))
 
 
-def init_hint(widget):
+def init_hint(widget: QWidget):
     cur_pos = data.learning_pos[0][0]
     hint = data.tokens[cur_pos]
     update_text_gui((widget, hint))
 
 
-def update_learning(user_input, hint_widget, body_widget):
+def update_learning(user_input: str, hint_widget: QWidget, body_widget: QWidget):
     is_correct, cur_char, cur_pinyin = check_correct(user_input, data.learning_pos, data.tokens)
     next_pos = data.learning_pos[0][0]
     next_char = data.tokens[next_pos]
