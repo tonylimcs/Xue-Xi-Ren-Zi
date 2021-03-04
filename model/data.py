@@ -45,6 +45,7 @@ class Data:
             self.user["learned"][char] = []
 
         if pinyin not in self.user["learned"][char]:
+            # Avoid duplication
             self.user["learned"][char].append(pinyin)
 
         # Remove from "learning"
