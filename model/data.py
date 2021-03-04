@@ -47,7 +47,7 @@ class Data:
         if pinyin not in self.user["learned"][char]:
             self.user["learned"][char].append(pinyin)
 
-        # Update "learning"
+        # Remove from "learning"
         del self.user["learning"][char][pinyin]
         if len(self.user["learning"][char]) == 0:
             del self.user["learning"][char]
