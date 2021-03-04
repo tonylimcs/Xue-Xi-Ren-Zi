@@ -31,7 +31,7 @@ def tag_size_html(char: str, size: int) -> str:
     return f"<font size={size}>{char}</font>"
 
 
-def format_color(char: str, tag="") -> str:
+def format_color(char: str, tag: str = "") -> str:
     """
     Color code the text based on the tag
     :param char: Chinese character that the user is learning
@@ -47,7 +47,7 @@ def format_color(char: str, tag="") -> str:
     elif tag == UNSEEN:
         color_ = color.BLACK
     else:
-        return char
+        color_ = color.GRAY
 
     return tag_color_html(char, color_)
 
@@ -99,15 +99,18 @@ def update_highlight(text: str, char: str) -> str:
     return text.replace(old_char, new_char, 1)
 
 
-def update_format(text: str, cur_char: str, cur_pinyin: str, next_char: str, correct=True) -> str:
+def update_format(text: str, cur_char: str, cur_pinyin: str, next_char: str, correct) -> str:
     old_char = tag_highlight_html(cur_char)
     old_char = format_color(old_char, tag=LEARNING)
 
     result = CORRECT if correct else WRONG
     if not correct:
-        # show pinyin if wrong
         cur_char = tag_pinyin(cur_char, cur_pinyin)
 
     new_char = format_color(cur_char, tag=result)
     text = text.replace(old_char, new_char, 1)
-    return update_highlight(text, next_char)
+
+    if next_char is not None:
+        text = update_highlight(text, next_char)
+
+    return text

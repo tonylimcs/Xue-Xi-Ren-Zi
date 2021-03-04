@@ -33,9 +33,9 @@ class TopFrame(QFrame):
             key = event.key()
             if key == Qt.Key_Return:
                 user_input = self.pinyin_input.line_edit.text()
-                print(f'input: {user_input} ')
-                update_learning(user_input, self.pinyin_input.label, self.body.label)
+                print(f'input: {user_input}')
                 self.pinyin_input.line_edit.setText("")
+                update_learning(user_input, self.pinyin_input.label, self.body.label)
                 return True
 
             if key == Qt.Key_Escape:
