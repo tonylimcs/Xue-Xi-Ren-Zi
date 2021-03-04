@@ -2,6 +2,5 @@
 venv/
 *.pyc
 gui/test.py
-test.py
 articles/
 database/
