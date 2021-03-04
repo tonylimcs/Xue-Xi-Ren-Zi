@@ -1,6 +1,5 @@
-from gui_py.font import color as _color
+from gui.font import color
 from engine.utils import num2dia
-import re
 
 LEARNING = 'learning'
 UNSEEN = 'unseen'
@@ -8,18 +7,18 @@ WRONG = 'wrong'
 CORRECT = 'correct'
 
 
-def tag_color_html(char: str, color: str) -> str:
+def tag_color_html(char: str, color_: str) -> str:
     """
     Embed text with HTML format of the font tag for color
     :param char: string to be embedded
-    :param color: color of the text
+    :param color_: color of the text
     :return: HTML format of the string with the font tag
     """
-    return f"<font color='{color}'>{char}</font>"
+    return f"<font color='{color_}'>{char}</font>"
 
 
-def tag_highlight_html(char: str, color=_color.YELLOW) -> str:
-    return f'<span style="background-color: {color}">{char}</span>'
+def tag_highlight_html(char: str, color_=color.YELLOW) -> str:
+    return f'<span style="background-color: {color_}">{char}</span>'
 
 
 def tag_size_html(char: str, size: int) -> str:
@@ -40,17 +39,17 @@ def format_color(char: str, tag="") -> str:
     :return: HTML format of the string with the font tag
     """
     if tag == LEARNING:
-        c = _color.ORANGE
+        color_ = color.ORANGE
     elif tag == WRONG:
-        c = _color.RED
+        color_ = color.RED
     elif tag == CORRECT:
-        c = _color.GREEN
+        color_ = color.GREEN
     elif tag == UNSEEN:
-        c = _color.BLACK
+        color_ = color.BLACK
     else:
         return char
 
-    return tag_color_html(char, c)
+    return tag_color_html(char, color_)
 
 
 def tag_pinyin(char: str, pinyin: str) -> str:
