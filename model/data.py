@@ -7,11 +7,20 @@ from model.text_formatter import init_format
 USER_JSON = 'database/user.json'
 
 
-class Data:
+class SingletonMeta(type):
+    _instances = {}
 
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
+
+
+class Data(metaclass=SingletonMeta):
     def __init__(self):
         self.tokens, py_list = [], []
-        lines = get_article('articles/test.txt')
+        lines = get_article('articles/1.txt')
         for count, line in enumerate(lines):
             print(f'{count + 1} of {len(lines)}')
             line, eng_words = remove_english(line)
