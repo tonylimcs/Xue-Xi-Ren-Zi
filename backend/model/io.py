@@ -1,3 +1,5 @@
+from backend.keys import *
+
 import json
 
 
@@ -22,8 +24,8 @@ def get_user_db(file_path):
             return json.load(f)
     except FileNotFoundError:
         # Initialize user database
-        return {"learned": {}, "learning": {},
-                "articles": 0, "repeat": 5}
+        return {LEARNED: {}, LEARNING: {},
+                ARTICLES: 0, REPETITION: 5}
 
 
 def update_user_db(file_path, user_db):

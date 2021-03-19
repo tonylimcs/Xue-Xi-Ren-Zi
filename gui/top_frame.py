@@ -4,7 +4,7 @@ from PySide6.QtCore import *
 from gui.widgets.body import Body
 from gui.widgets.pinyin_input import PinyinInput
 
-from model.update_gui import update_learning, init_body, init_hint
+from backend.model.update_gui import update_learning, init_body, init_hint
 
 
 class TopFrame(QFrame):

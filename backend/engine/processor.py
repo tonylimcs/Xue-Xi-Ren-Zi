@@ -1,6 +1,6 @@
 import re
 from g2pc import G2pC
-from engine.utils import is_chinese, split_chinese
+from backend.engine.utils import is_chinese, split_chinese
 
 english = re.compile(u'[A-Za-z]+( [A-Za-z]+)*')
 

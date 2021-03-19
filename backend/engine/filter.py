@@ -1,4 +1,5 @@
-from engine.utils import is_chinese
+from backend.engine.utils import is_chinese
+from backend.keys import *
 
 
 def update_learning(char, pinyin, learning, repeat):
@@ -9,21 +10,21 @@ def update_learning(char, pinyin, learning, repeat):
     learning[char][pinyin] = repeat
 
 
-def filter_pos(user_db, tokens, py_list):
+def filter_pos(user_db, tokens, pinyin_ls):
     """
     Filter unseen and learning Chinese characters, and get their positions in the text
     :param user_db: user database
     :param tokens: tokenized text
-    :param py_list: list of pinyin of its respective character in the text
+    :param pinyin_ls: list of pinyin
     :return: lists of positions of unseen chars and learning chars respectively
     """
-    repeat = user_db["repeat"]
-    learned, learning = user_db["learned"], user_db["learning"]
+    repetition = user_db[REPETITION]
+    learned, learning = user_db[LEARNED], user_db[LEARNING]
     unseen_pos, learning_pos = [], []
     idx = 0
     for pos, token in enumerate(tokens):
         if is_chinese(token):
-            pinyin = py_list[idx]
+            pinyin = pinyin_ls[idx]
             idx += 1
             if token in learned and pinyin in learned[token]:
                 continue
@@ -36,6 +37,6 @@ def filter_pos(user_db, tokens, py_list):
 
             if flag:
                 unseen_pos.append((pos, pinyin))
-                update_learning(token, pinyin, learning, repeat)
+                update_learning(token, pinyin, learning, repetition)
 
     return unseen_pos, learning_pos

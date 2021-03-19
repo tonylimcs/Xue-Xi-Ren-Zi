@@ -1,5 +1,5 @@
 from gui.font import color
-from engine.utils import num2dia
+from backend.engine.utils import num2dia
 
 LEARNING = 'learning'
 UNSEEN = 'unseen'
@@ -92,14 +92,18 @@ def init_format(tokens: list, unseen: list, learning: list) -> str:
 
 
 def update_highlight(text: str, char: str) -> str:
+    if char is None:
+        return text
+
     old_char = format_color(char, tag=LEARNING)
 
     highlighted_char = tag_highlight_html(char)
     new_char = format_color(highlighted_char, tag=LEARNING)
+
     return text.replace(old_char, new_char, 1)
 
 
-def update_format(text: str, cur_char: str, cur_pinyin: str, next_char: str, correct) -> str:
+def update_format(text: str, cur_char: str, cur_pinyin: str, correct: bool) -> str:
     old_char = tag_highlight_html(cur_char)
     old_char = format_color(old_char, tag=LEARNING)
 
@@ -108,9 +112,13 @@ def update_format(text: str, cur_char: str, cur_pinyin: str, next_char: str, cor
         cur_char = tag_pinyin(cur_char, cur_pinyin)
 
     new_char = format_color(cur_char, tag=result)
-    text = text.replace(old_char, new_char, 1)
 
-    if next_char is not None:
-        text = update_highlight(text, next_char)
+    return text.replace(old_char, new_char, 1)
+
+
+def update_domino_effect(text: str, cur_char: str, counter: int):
+    old_char = format_color(cur_char, tag=LEARNING)
+    if counter == 0:
+        return text.replace(old_char, cur_char)
 
     return text
