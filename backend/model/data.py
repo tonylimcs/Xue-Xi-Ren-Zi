@@ -22,7 +22,7 @@ class SingletonMeta(type):
 class Data(metaclass=SingletonMeta):
     def __init__(self):
         self.tokens, py_list = [], []
-        lines = get_article('articles/test.txt')
+        lines = get_article('articles/1.txt')
         print("processing...")
         for count, line in enumerate(lines):
             print(f'{count + 1} of {len(lines)} lines')
