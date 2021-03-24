@@ -5,7 +5,7 @@ from backend.engine.constants.keys import *
 from file_paths import USER_DB_PATH
 
 _INIT_USER_DB = {LEARNED: {}, LEARNING: {},
-                 ARTICLES: 0,
+                 ARTICLES: [],
                  REPETITION: 5}     # Value may be modified to suit user's preference
 
 
@@ -76,11 +76,12 @@ class User(metaclass=SingletonMeta):
         counter = self._user[LEARNING][hanzi][pinyin]
         print(f"* {result}. {hanzi}[{pinyin}]: {counter} *")
 
-    def inc_articles(self) -> None:
+    def update_articles(self, article_path) -> None:
         """
         Increment no. of articles read by the user.
         """
-        self._user[ARTICLES] += 1
+        if article_path not in self._user[ARTICLES]:    # Prevent duplication
+            self._user[ARTICLES].append(article_path)
 
     def change_rep(self, repetition: int) -> None:
         """
@@ -104,4 +105,4 @@ class User(metaclass=SingletonMeta):
                and pinyin in self._user[status][hanzi]
 
     def save_user(self) -> None:
-        save_user_db(_USER_DB_PATH, self._user)
+        save_user_db(USER_DB_PATH, self._user)
