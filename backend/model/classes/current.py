@@ -6,11 +6,8 @@ from backend.model.classes.parsed import Parsed
 
 
 class Current(metaclass=SingletonMeta):
-    _parsed = Parsed()
-
     def __init__(self):
-        super(Current, self).__init__()
-
+        self._parsed = Parsed()
         self._idx = self.__init_idx()   # Current index from parsed list
         self._phrase, self._char = self.__get_cur()
 
@@ -84,3 +81,6 @@ class Current(metaclass=SingletonMeta):
     def update_cur(self) -> None:
         self.__update_idx()
         self._phrase, self._char = self.__get_cur()
+
+    def update(self):
+        self.__init__()

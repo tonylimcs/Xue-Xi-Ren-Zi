@@ -6,9 +6,8 @@ from backend.model.txt2html import *
 
 
 class Body(metaclass=SingletonMeta):
-    _parsed = Parsed()
-
     def __init__(self):
+        self._parsed = Parsed()
         self._body_html = self.__init_body_html()
 
     def __repr__(self):
@@ -87,3 +86,6 @@ class Body(metaclass=SingletonMeta):
     def update_to_learned(self, hanzi: str) -> None:
         original = color_code(hanzi, status=keys.LEARNING)
         self._body_html = self.body_html.replace(original, hanzi)
+
+    def update(self):
+        self.__init__()
