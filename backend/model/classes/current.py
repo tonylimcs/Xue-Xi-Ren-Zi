@@ -29,7 +29,7 @@ class Current(metaclass=SingletonMeta):
     def __get_idx(self, idx: tuple) -> tuple:
         """
         Get the index from the parsed list to test the user of its correct pinyin.
-        :return: tuple(index of phrase/char[, index of char in phrase])
+        :return: tuple(index of phrase/char, index of char in phrase)
         """
         if idx:
             parsed = self._parsed.parsed
