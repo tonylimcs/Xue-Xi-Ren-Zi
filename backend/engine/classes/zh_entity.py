@@ -138,5 +138,5 @@ def create_zh_entity(hanzi: str, pinyin: str, meaning: str) \
         else:
             zh_entity = Phrase(hanzi, pinyin, meaning)
         return zh_entity
-    else:
-        return None
+
+    return None
