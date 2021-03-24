@@ -5,7 +5,7 @@ from backend.engine.io import get_article
 from backend.engine.constants import keys
 
 
-_ARTICLE_PATH = 'articles/1.txt'
+from file_paths import ARTICLE_PATH
 
 
 class _ParsedSingleton(metaclass=SingletonMeta):
@@ -27,7 +27,7 @@ class _ParsedSingleton(metaclass=SingletonMeta):
 
     @staticmethod
     def __init_parsed() -> list:
-        lines = get_article(_ARTICLE_PATH)
+        lines = get_article(ARTICLE_PATH)
         return parse(lines)
 
     def __init_unseen(self) -> set:

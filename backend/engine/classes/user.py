@@ -2,7 +2,7 @@ from backend.engine.classes.singleton_meta import SingletonMeta
 from backend.engine.io import get_user_db, save_user_db
 from backend.engine.constants.keys import *
 
-_USER_DB_PATH = 'database/user.json'
+from file_paths import USER_DB_PATH
 
 _INIT_USER_DB = {LEARNED: {}, LEARNING: {},
                  ARTICLES: 0,
@@ -22,7 +22,7 @@ class User(metaclass=SingletonMeta):
 
     @staticmethod
     def __init_user() -> dict:
-        user_ = get_user_db(_USER_DB_PATH)
+        user_ = get_user_db(USER_DB_PATH)
         if user_ is None:
             user_ = _INIT_USER_DB
         return user_
