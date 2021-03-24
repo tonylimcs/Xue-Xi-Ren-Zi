@@ -8,6 +8,7 @@ def get_article(file_path: str) -> list:
     :return: list of lines from the article
     """
     with open(file_path, "r", encoding='utf-8') as f:
+        print(f"[I/O] Retrieving article...{file_path}")
         return f.readlines()
 
 

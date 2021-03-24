@@ -84,4 +84,3 @@ class Current(metaclass=SingletonMeta):
     def update_cur(self) -> None:
         self.__update_idx()
         self._phrase, self._char = self.__get_cur()
-        print(self)
