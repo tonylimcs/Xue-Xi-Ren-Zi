@@ -13,7 +13,7 @@ def get_article(file_path: str) -> [list, None]:
             return f.readlines()
     except FileNotFoundError:
         print(f"[I/O] Article not found!...{file_path}")
-        return None
+        raise
 
 
 def get_user_db(file_path: str) -> [dict, None]:
