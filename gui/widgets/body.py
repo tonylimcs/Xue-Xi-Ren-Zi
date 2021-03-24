@@ -4,7 +4,7 @@ from PySide6.QtCore import *
 from gui.font.constants import BODY_SIZE
 
 
-class Label(QLabel):
+class Text(QLabel):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -28,22 +28,19 @@ class Body(QScrollArea):
         # making widget resizable
         self.setWidgetResizable(True)
 
-        # making qwidget object
+        # making QWidget object
         content = QWidget(self)
         self.setWidget(content)
 
         # vertical box layout
         lay = QVBoxLayout(content)
 
-        self.label = Label(content)
+        self.text = Text(content)
 
         # adding label to the layout
-        lay.addWidget(self.label)
+        lay.addWidget(self.text)
 
         self.setStyleSheet("QScrollArea {"
                            "border: 1px solid gray; "
                            "border-radius: 2px}"
                            "QScrollBar:vertical{width: 12px}")
-
-    def setText(self, text):
-        self.label.setText(text)

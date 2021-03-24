@@ -1,9 +1,7 @@
-from backend.keys import *
-
 import json
 
 
-def get_article(file_path):
+def get_article(file_path: str) -> list:
     """
     Get content of the article
     :param file_path: path of the article (.txt)
@@ -13,7 +11,7 @@ def get_article(file_path):
         return f.readlines()
 
 
-def get_user_db(file_path):
+def get_user_db(file_path: str) -> [dict, None]:
     """
     Get user database
     :param file_path: path of the user database (.json)
@@ -21,18 +19,19 @@ def get_user_db(file_path):
     """
     try:
         with open(file_path, "r", encoding='utf-8') as f:
+            print(f"[I/O] Retrieving user data...{file_path}")
             return json.load(f)
     except FileNotFoundError:
-        # Initialize user database
-        return {LEARNED: {}, LEARNING: {},
-                ARTICLES: 0, REPETITION: 5}
+        print(f"[I/O] No existing user data found.")
+        return None
 
 
-def update_user_db(file_path, user_db):
+def save_user_db(file_path: str, user_db: dict) -> None:
     """
-    Update user database
+    Save user database to json file
     :param file_path: path of the user database (.json)
     :param user_db: dictionary of updated user data
     """
     with open(file_path, 'w') as f:
+        print(f"[I/O] Saving user data...{file_path}")
         json.dump(user_db, f)

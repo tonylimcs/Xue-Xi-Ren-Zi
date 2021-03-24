@@ -1,2 +1,2 @@
 STYLE = 'Arial'
-BODY_SIZE = 15
+BODY_SIZE = 20

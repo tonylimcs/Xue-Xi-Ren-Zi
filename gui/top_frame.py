@@ -4,7 +4,8 @@ from PySide6.QtCore import *
 from gui.widgets.body import Body
 from gui.widgets.pinyin_input import PinyinInput
 
-from backend.model.update_gui import update_learning, init_body, init_hint
+from backend.model.classes import handler
+from backend.model.constants.event_types import *
 
 
 class TopFrame(QFrame):
@@ -24,18 +25,14 @@ class TopFrame(QFrame):
         self.setLayout(self.layout)
         self.installEventFilter(self)
 
-        # Initialize body text and hint
-        init_body(self.body)
-        init_hint(self.pinyin_input.label)
+        handler.handle(self, event=GUI_INIT)
 
     def eventFilter(self, watched, event):
         if event.type() == QEvent.KeyPress:
             key = event.key()
             if key == Qt.Key_Return:
-                user_input = self.pinyin_input.line_edit.text()
-                print(f'input: {user_input}')
-                self.pinyin_input.line_edit.setText("")
-                update_learning(user_input, self.pinyin_input.label, self.body.label)
+                handler.handle(self, event=USER_INPUT)
+                self.pinyin_input.line_edit.setText("")     # Reset
                 return True
 
             if key == Qt.Key_Escape:

@@ -10,10 +10,10 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.app = app
         self.setWindowTitle("学习认字")
-        self.top_frame = TopFrame()
+        self.setFixedSize(800, 600)
 
+        self.top_frame = TopFrame()
         self.setCentralWidget(self.top_frame)
-        self.setFixedSize(600, 400)
 
     def start_app(self):
         self.show()

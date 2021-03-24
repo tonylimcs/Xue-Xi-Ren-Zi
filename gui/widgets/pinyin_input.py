@@ -5,7 +5,7 @@ from gui.font.constants import STYLE, BODY_SIZE
 pinyin_regex = r'^[A-Za-z]{1,5}[1-5]?$'
 
 
-class Label(QLabel):
+class Hint(QLabel):
     def __init__(self):
         super().__init__()
 
@@ -26,8 +26,8 @@ class PinyinInput(QWidget):
 
         layout = QHBoxLayout(self)
 
-        self.label = Label()
+        self.hint = Hint()
         self.line_edit = LineEdit()
 
-        layout.addWidget(self.label)
+        layout.addWidget(self.hint)
         layout.addWidget(self.line_edit)

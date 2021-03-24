@@ -1,6 +1,6 @@
 import re
 
-# diacritical format of tone representation
+# Diacritical format of tone representation
 dia = [
     ['ā', 'ē', 'ī', 'ō', 'ū', 'ǖ'],
     ['á', 'é', 'í', 'ó', 'ú', 'ǘ'],
@@ -15,7 +15,7 @@ def is_chinese(word: str) -> bool:
     """
     Check if the word is Chinese
     :param word: a word/character
-    :return: true if Chinese, else false
+    :return: True if Chinese, else False
     """
     return True if chinese.search(word) else False
 
@@ -41,15 +41,14 @@ def num2dia(pinyin: str) -> str:
         tone = int(pinyin[-1])
         pinyin = pinyin[:-1]
         if tone == 5:
-            # neutral tone
+            # Neutral tone
             pass
         elif is_special:
-            # special case
+            # Special case
             pinyin = pinyin.replace('u', dia[tone - 1][4])
         else:
             for i, vowel in enumerate(['a', 'e', 'i', 'o', 'u']):
                 if vowel in pinyin:
                     pinyin = pinyin.replace(vowel, dia[tone - 1][i])
                     break
-
     return pinyin
