@@ -33,7 +33,7 @@ class User(metaclass=SingletonMeta):
             self._user[LEARNED][hanzi] = []
 
         if pinyin not in self._user[LEARNED][hanzi]:  # Prevent duplication
-            print(f"[USER] New character learned: {hanzi}!")
+            print(f"[USER] Learned: ({hanzi}, {pinyin})!")
             self._user[LEARNED][hanzi].append(pinyin)
 
         if self.is_status(hanzi, pinyin, status=LEARNING):
@@ -76,7 +76,7 @@ class User(metaclass=SingletonMeta):
         counter = self._user[LEARNING][hanzi][pinyin]
         print(f"* {result}. {hanzi}[{pinyin}]: {counter} *")
 
-    def update_articles(self, article_path) -> None:
+    def update_articles(self, article_path: str) -> None:
         """
         Increment no. of articles read by the user.
         """
