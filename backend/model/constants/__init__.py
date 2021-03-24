@@ -10,4 +10,3 @@ may get input dynamically from a recommender in the future.
 """
 p = Parsed(ARTICLE_PATH)
 p.subscribe(Body(), Current())
-
