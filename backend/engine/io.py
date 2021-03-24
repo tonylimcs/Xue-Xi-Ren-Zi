@@ -1,15 +1,19 @@
 import json
 
 
-def get_article(file_path: str) -> list:
+def get_article(file_path: str) -> [list, None]:
     """
     Get content of the article
     :param file_path: path of the article (.txt)
     :return: list of lines from the article
     """
-    with open(file_path, "r", encoding='utf-8') as f:
-        print(f"[I/O] Retrieving article...{file_path}")
-        return f.readlines()
+    try:
+        with open(file_path, "r", encoding='utf-8') as f:
+            print(f"[I/O] Retrieving article...{file_path}")
+            return f.readlines()
+    except FileNotFoundError:
+        print(f"[I/O] Article not found!...{file_path}")
+        return None
 
 
 def get_user_db(file_path: str) -> [dict, None]:
