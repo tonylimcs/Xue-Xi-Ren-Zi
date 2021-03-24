@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def get_article(file_path: str) -> [list, None]:
@@ -37,6 +38,9 @@ def save_user_db(file_path: str, user_db: dict) -> None:
     :param file_path: path of the user database (.json)
     :param user_db: dictionary of updated user data
     """
+    # In case directory is not yet existed.
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
     with open(file_path, 'w') as f:
         print(f"[I/O] Saving user data...{file_path}")
         json.dump(user_db, f)
