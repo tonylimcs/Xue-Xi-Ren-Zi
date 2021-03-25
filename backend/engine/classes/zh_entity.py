@@ -1,5 +1,3 @@
-from abc import ABCMeta
-
 from backend.engine import g2p
 from backend.engine.classes.user import User
 from backend.engine.constants import keys
@@ -8,22 +6,21 @@ from backend.engine.utils import split_chinese, is_chinese
 import re
 
 
-class SingletonABCMeta(ABCMeta):
+class _ZHEntitySingletonMeta(type):
     _instances = {}
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, hanzi: str, pinyin: str, meaning: str = ''):
         """
         A hanzi may have more than one pinyin,
         thus both hanzi and pinyin are required for uniqueness.
         """
-        hanzi, pinyin = args[0], args[1]
         if (hanzi, pinyin) not in cls._instances:
-            instance = super().__call__(*args, **kwargs)
+            instance = super().__call__(hanzi, pinyin, meaning)
             cls._instances[(hanzi, pinyin)] = instance
         return cls._instances[(hanzi, pinyin)]
 
 
-class ZHEntity(metaclass=SingletonABCMeta):
+class ZHEntity(metaclass=_ZHEntitySingletonMeta):
     def __init__(self, hanzi: str, pinyin: str, meaning: str):
         """
         The 'entity' here refers to a Chinese character/phrase.
