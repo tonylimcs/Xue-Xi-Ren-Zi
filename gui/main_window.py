@@ -2,7 +2,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
 
-from gui.top_frame import TopFrame
+from gui.frames.main_frame import MainFrame
 
 
 class MainWindow(QMainWindow):
@@ -12,8 +12,8 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("学习认字")
         self.setFixedSize(800, 600)
 
-        self.top_frame = TopFrame()
-        self.setCentralWidget(self.top_frame)
+        self.main_frame = MainFrame()
+        self.setCentralWidget(self.main_frame)
 
     def start_app(self):
         self.show()

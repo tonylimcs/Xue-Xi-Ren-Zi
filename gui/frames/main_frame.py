@@ -3,23 +3,20 @@ from PySide6.QtCore import *
 
 from gui.widgets.body import Body
 from gui.widgets.pinyin_input import PinyinInput
+from gui.widgets.side_column import SideColumn
 
 from backend.model.classes import handler
 from backend.model.constants.event_types import *
 
+from gui.frames.upper_frame import UpperFrame
 
-class TopFrame(QFrame):
+
+class MainFrame(UpperFrame):
     def __init__(self):
-        QFrame.__init__(self)
+        super().__init__()
         self.layout = QVBoxLayout()
 
-        self.body = Body()
-        self.pinyin_input = PinyinInput()
-
-        self.layout.addWidget(self.body)
-        self.layout.addWidget(self.pinyin_input)
-
-        self.pinyin_input.installEventFilter(self)
+        self.layout.addLayout(self.upper_layout)
 
         # Set This Layout
         self.setLayout(self.layout)
