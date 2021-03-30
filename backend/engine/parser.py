@@ -53,11 +53,10 @@ def parse_line(line: str) -> list:
     parsed_line = []
     parsed = g2p(line)
     for tup in parsed:
-        zh_entity = create_zh_entity(tup[0], tup[2], tup[4])
-        if zh_entity is not None:
-            parsed_line.append(zh_entity)
-        else:
-            parsed_line.append(tup[0])
+        entity = create_zh_entity(tup[0], tup[2], tup[4])
+        if entity is None:
+            entity = tup[0]
+        parsed_line.append(entity)
     return parsed_line
 
 

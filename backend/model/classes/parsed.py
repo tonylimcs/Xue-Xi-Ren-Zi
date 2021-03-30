@@ -64,8 +64,7 @@ class Parsed(metaclass=_ParsedSingletonMeta):
 
                 for j, ch in enumerate(chars):
                     idx = (i, j)
-                    if ch.status == keys.UNSEEN \
-                            and idx not in unseen_:
+                    if ch.status == keys.UNSEEN:
                         unseen_.add(idx)
                         ch.status = keys.LEARNING   # Update status
         return unseen_
