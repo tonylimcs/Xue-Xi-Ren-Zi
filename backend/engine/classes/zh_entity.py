@@ -38,8 +38,9 @@ class ZHEntity(metaclass=_ZHEntitySingletonMeta):
 
     def __len__(self):
         """
+        Length of Chinese word.
         Example, “你” = 1, "你好" = 2, "万事如意" = 4, ...
-        :return: length of hanzi
+        :return: the number of Chinese characters
         """
         return len(self.hanzi)
 
@@ -77,7 +78,7 @@ class Character(ZHEntity):
             # Retrieve meaning
             self.meaning = g2p(self.hanzi)[0][4]
 
-        # Retrieve status from user database
+        # Retrieve status from user data
         self.status = self._user.get_status(hanzi, pinyin)
 
     @property

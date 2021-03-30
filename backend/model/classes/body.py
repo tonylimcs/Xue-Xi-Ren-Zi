@@ -49,8 +49,10 @@ class Body(metaclass=SingletonMeta):
                             wrapped_str = highlight_hanzi(ch.hanzi)
                             is_first = False    # Update flag
 
-                    if idx not in unseen_idx:
-                        wrapped_str = color_code(wrapped_str, status=ch.status)
+                        wrapped_str = color_code(wrapped_str, status=keys.LEARNING)
+                    else:
+                        # Color for 'learned' hanzi is already the default
+                        pass
 
                     strings.append(wrapped_str)
                 string = ''.join(strings)
