@@ -87,7 +87,7 @@ class User(metaclass=SingletonMeta):
         """
         Change the number of times the user must input the pinyin
         of the same character correctly before considered as 'learned'.
-        :param repetition: the number of times the user
+        @param repetition: the number of times the user
         must repeatedly input the pinyin correctly for a given character
         """
         self._user[REPETITION] = repetition

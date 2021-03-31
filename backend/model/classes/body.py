@@ -21,7 +21,7 @@ class Body(metaclass=SingletonMeta):
         """
         Convert parsed lines into a string of HTML format
         for the body text to be displayed on the GUI.
-        :return: a string of HTML format
+        @return: a string of HTML format
         """
         html_str = ''
         is_first = True

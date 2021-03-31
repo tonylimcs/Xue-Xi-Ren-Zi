@@ -24,9 +24,9 @@ class ZHEntity(metaclass=_ZHEntitySingletonMeta):
     def __init__(self, hanzi: str, pinyin: str, meaning: str):
         """
         The 'entity' here refers to a Chinese character/phrase.
-        :param hanzi: (汉字) the Chinese character
-        :param pinyin: (拼音) the alphabet romanization
-        :param meaning: the meaning of the entity
+        @param hanzi: (汉字) the Chinese character
+        @param pinyin: (拼音) the alphabet romanization
+        @param meaning: the meaning of the entity
         """
         self._hanzi = hanzi
         self._pinyin = pinyin
@@ -40,7 +40,7 @@ class ZHEntity(metaclass=_ZHEntitySingletonMeta):
         """
         Length of Chinese word.
         Example, “你” = 1, "你好" = 2, "万事如意" = 4, ...
-        :return: the number of Chinese characters
+        @return: the number of Chinese characters
         """
         return len(self.hanzi)
 
@@ -68,9 +68,9 @@ class Character(ZHEntity):
         """
         A Chinese character.
         The meaning can be automatically retrieved, if not already given.
-        :param hanzi: (汉字) the Chinese character
-        :param pinyin: (拼音) the alphabet romanization
-        :param meaning: the meaning of the entity
+        @param hanzi: (汉字) the Chinese character
+        @param pinyin: (拼音) the alphabet romanization
+        @param meaning: the meaning of the entity
         """
         super(Character, self).__init__(hanzi, pinyin, meaning)
 
@@ -102,9 +102,9 @@ class Phrase(ZHEntity):
         A phrase is a composition of more than one Chinese characters.
         Unlike Character objects, the meaning must be given,
         as to ensure that the phrase is indeed meaningful/exists in the dictionary.
-        :param hanzi: (汉字) the string of Chinese characters
-        :param pinyin: (拼音) the string of alphabet romanizations
-        :param meaning: the meaning of the entity
+        @param hanzi: (汉字) the string of Chinese characters
+        @param pinyin: (拼音) the string of alphabet romanizations
+        @param meaning: the meaning of the entity
         """
         super(Phrase, self).__init__(hanzi, pinyin, meaning)
 
@@ -125,10 +125,10 @@ def create_zh_entity(hanzi: str, pinyin: str, meaning: str) \
     """
     Method for creating the appropriate object；
     returns None if entity is not Chinese.
-    :param hanzi: (汉字) the Chinese character
-    :param pinyin: (拼音) the alphabet romanization
-    :param meaning: the meaning of the entity
-    :return: the appropriate entity-type object
+    @param hanzi: (汉字) the Chinese character
+    @param pinyin: (拼音) the alphabet romanization
+    @param meaning: the meaning of the entity
+    @return: the appropriate entity-type object
     """
     if is_chinese(hanzi):
         if len(hanzi) == 1:

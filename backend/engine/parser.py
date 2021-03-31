@@ -10,8 +10,8 @@ def get_en_phrases(line: str) -> list:
     """
     Get English phrases, if any, from the given string.
     The order of the positions is to be preserved.
-    :param line: the text that English phrases (if any) are to be extracted from
-    :return: a list of English phrases
+    @param line: the text that English phrases (if any) are to be extracted from
+    @return: a list of English phrases
     """
     en_all = english.finditer(line)
     return [en.group(0) for en in en_all]
@@ -20,9 +20,9 @@ def get_en_phrases(line: str) -> list:
 def remove_en_phrases(line: str, en_phrases: list) -> str:
     """
     Remove English phrases, if any, from the given string.
-    :param line: a line from the article
-    :param en_phrases: a list of English phrases
-    :return: the string without any English phrases
+    @param line: a line from the article
+    @param en_phrases: a list of English phrases
+    @return: the string without any English phrases
     """
     unique_phrases = set(en_phrase for en_phrase in en_phrases)     # Prevent overhead from repeated search
     for en_phrase in unique_phrases:
@@ -33,9 +33,9 @@ def remove_en_phrases(line: str, en_phrases: list) -> str:
 def restore_en_phrases(parsed: list, en_phrases: list) -> list:
     """
     Restore removed English phrases, if any.
-    :param parsed: the parsed list
-    :param en_phrases: the list of English phrases that were removed
-    :return: the parsed list with the English phrases restored
+    @param parsed: the parsed list
+    @param en_phrases: the list of English phrases that were removed
+    @return: the parsed list with the English phrases restored
     """
     if len(en_phrases) == 0:
         return parsed
