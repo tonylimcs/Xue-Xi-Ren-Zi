@@ -54,19 +54,20 @@ class Parsed(metaclass=_ParsedSingletonMeta):
 
     def __init_unseen(self) -> set:
         unseen_ = set()
-        for i, e in enumerate(self.parsed):
-            if isinstance(e, ZHEntity):
-                chars = []
-                if isinstance(e, Phrase):
-                    chars += e.chars
-                elif isinstance(e, Character):
-                    chars.append(e)
+        for i, parsed_line in enumerate(self.parsed):
+            for j, e in enumerate(parsed_line):
+                if isinstance(e, ZHEntity):
+                    chars = []
+                    if isinstance(e, Phrase):
+                        chars += e.chars
+                    elif isinstance(e, Character):
+                        chars.append(e)
 
-                for j, ch in enumerate(chars):
-                    idx = (i, j)
-                    if ch.status == keys.UNSEEN:
-                        unseen_.add(idx)
-                        ch.status = keys.LEARNING   # Update status
+                    for k, ch in enumerate(chars):
+                        idx = (i, j, k)
+                        if ch.status == keys.UNSEEN:
+                            unseen_.add(idx)
+                            ch.status = keys.LEARNING   # Update status
         return unseen_
 
     def subscribe(self, *listeners) -> None:

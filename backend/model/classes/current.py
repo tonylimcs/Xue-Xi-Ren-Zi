@@ -26,28 +26,35 @@ class Current(metaclass=SingletonMeta):
     def __get_idx(self, idx: tuple) -> tuple:
         """
         Get the index from the parsed list to test the user of its correct pinyin.
-        :return: tuple(index of phrase/char, index of char in phrase)
+        @return: tuple(index of phrase/char, index of char in phrase)
         """
         if idx:
             parsed = self._parsed.parsed
-            s0, s1 = idx
-            for i in range(s0, len(parsed)):
-                if isinstance(parsed[i], ZHEntity):
-                    chars = []
-                    if isinstance(parsed[i], Phrase):
-                        chars += parsed[i].chars
-                    elif isinstance(parsed[i], Character):
-                        chars.append(parsed[i])
+            p, s0, s1 = idx
+            for i in range(p, len(parsed)):
+                for j in range(s0, len(parsed[i])):
+                    entity = parsed[i][j]
+                    if isinstance(entity, ZHEntity):
+                        chars = []
+                        if isinstance(entity, Phrase):
+                            chars += entity.chars
+                        elif isinstance(entity, Character):
+                            chars.append(entity)
 
-                    for j in range(s1, len(chars)):
-                        if chars[j].status == keys.LEARNING \
-                                and (i, j) not in self._parsed.unseen:
-                            return i, j
-                    s1 = 0  # Reset
+                        for k in range(s1, len(chars)):
+                            if chars[k].status == keys.LEARNING \
+                                    and (i, j, k) not in self._parsed.unseen:
+                                return i, j, k
+                        s1 = 0  # Reset
+                    s0 = 0  # Reset
         return tuple()
 
     def __init_idx(self) -> [tuple, None]:
-        return self.__get_idx((0, 0))
+        """
+        Initialize the current index.
+        @return: tuple(line #, pos in line, pos in phrase)
+        """
+        return self.__get_idx((0, 0, 0))
 
     def __update_idx(self) -> None:
         """
@@ -55,13 +62,24 @@ class Current(metaclass=SingletonMeta):
         for subsequent search.
         """
         parsed = self._parsed.parsed
-        zh_entity = parsed[self._idx[0]]
+        zh_entity = parsed[self._idx[0]][self._idx[1]]
+        is_next_valid = True
         if isinstance(zh_entity, Phrase):
-            self._idx = (self._idx[0], self._idx[1] + 1)
-            if self._idx[1] >= len(zh_entity):
-                self._idx = (self._idx[0] + 1, 0)
-        else:
-            self._idx = (self._idx[0] + 1, 0)
+            self._idx = (self._idx[0],
+                         self._idx[1],
+                         self._idx[2] + 1)  # Update to next hanzi in phrase
+
+            is_next_valid = self._idx[2] < len(zh_entity)   # Validate next hanzi in phrase
+
+        if isinstance(zh_entity, Character) or not is_next_valid:
+            self._idx = (self._idx[0],
+                         self._idx[1] + 1,  # Update to next pos in line
+                         0)     # Reset
+
+        if self._idx[1] >= len(parsed[self._idx[0]]):
+            # Has exceeded the line
+            self._idx = (self._idx[0] + 1,  # Update to next line
+                         0, 0)  # Reset
 
         self._idx = self.__get_idx(self._idx)
 
@@ -70,10 +88,10 @@ class Current(metaclass=SingletonMeta):
         cur_phrase, cur_char = None, None
         if self._idx:
             parsed = self._parsed.parsed
-            zh_entity = parsed[self._idx[0]]
+            zh_entity = parsed[self._idx[0]][self._idx[1]]
             if isinstance(zh_entity, Phrase):
-                cur_phrase = parsed[self._idx[0]]
-                cur_char = zh_entity.chars[self._idx[1]]
+                cur_phrase = zh_entity
+                cur_char = zh_entity.chars[self._idx[2]]
             elif isinstance(zh_entity, Character):
                 cur_char = zh_entity
         return cur_phrase, cur_char

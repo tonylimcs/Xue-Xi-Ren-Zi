@@ -26,40 +26,41 @@ class Body(metaclass=SingletonMeta):
         html_str = ''
         is_first = True
         unseen_idx = self._parsed.unseen
-        for i, e in enumerate(self._parsed.parsed):
-            string = e
-            if isinstance(e, ZHEntity):
-                chars = []
-                if isinstance(e, Phrase):
-                    chars += e.chars
-                if isinstance(e, Character):
-                    chars.append(e)
+        for i, parsed_line in enumerate(self._parsed.parsed):
+            line = ''
+            for j, e in enumerate(parsed_line):
+                token = e
+                if isinstance(e, ZHEntity):
+                    chars = []
+                    if isinstance(e, Phrase):
+                        chars += e.chars
+                    if isinstance(e, Character):
+                        chars.append(e)
 
-                strings = []
-                for j, ch in enumerate(chars):
-                    wrapped_str = ch.hanzi
-                    idx = (i, j)
-                    if idx in unseen_idx:
-                        # Show pinyin for 'unseen' hanzi
-                        wrapped_str = show_pinyin(ch.hanzi, ch.pinyin)
-                        wrapped_str = color_code(wrapped_str, status=keys.UNSEEN)
-                    elif ch.status == keys.LEARNING:
-                        if is_first:
-                            # Highlight the first 'learning' hanzi
-                            wrapped_str = highlight_hanzi(ch.hanzi)
-                            is_first = False    # Update flag
+                    hanzi_str = ''
+                    for k, ch in enumerate(chars):
+                        wrapped_str = ch.hanzi
+                        idx = (i, j, k)
+                        if idx in unseen_idx:
+                            # Show pinyin for 'unseen' hanzi
+                            wrapped_str = show_pinyin(ch.hanzi, ch.pinyin)
+                            wrapped_str = color_code(wrapped_str, status=keys.UNSEEN)
+                        elif ch.status == keys.LEARNING:
+                            if is_first:
+                                # Highlight the first 'learning' hanzi
+                                wrapped_str = highlight_hanzi(ch.hanzi)
+                                is_first = False    # Update flag
+                            wrapped_str = color_code(wrapped_str, status=keys.LEARNING)
+                        else:
+                            # Color for 'learned' hanzi is already the default
+                            pass
 
-                        wrapped_str = color_code(wrapped_str, status=keys.LEARNING)
-                    else:
-                        # Color for 'learned' hanzi is already the default
-                        pass
+                        hanzi_str += wrapped_str
+                    token = hanzi_str
+                line += token
 
-                    strings.append(wrapped_str)
-                string = ''.join(strings)
-            elif e == '\n\n':
-                # Convert to HTML tags
-                string = '<br><br>'
-            html_str += string
+            if line:
+                html_str += f'<p>{line}</p>'  # Each line is a paragraph
         return html_str
 
     def update_highlight(self, char: Character) -> None:
