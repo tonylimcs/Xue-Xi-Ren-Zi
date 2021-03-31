@@ -43,9 +43,8 @@ def restore_en_phrases(parsed: list, en_phrases: list) -> list:
     restored = []
     for e in parsed:
         if e == '|':
-            restored.append(en_phrases.pop(0))
-        else:
-            restored.append(e)
+            e = en_phrases.pop(0)
+        restored.append(e)
     return restored
 
 
