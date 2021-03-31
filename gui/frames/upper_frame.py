@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import *
-from PySide6.QtCore import *
 
 from gui.widgets.body import Body
 from gui.widgets.pinyin_input import PinyinInput

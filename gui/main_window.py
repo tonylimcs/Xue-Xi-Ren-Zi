@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import *
-from PySide6.QtCore import *
 import sys
 
 from gui.frames.main_frame import MainFrame
@@ -19,6 +18,6 @@ class MainWindow(QMainWindow):
         self.show()
         sys.exit(self.app.exec_())
 
-    @Slot()
-    def exit_app(self):
+    @staticmethod
+    def exit_app():
         QApplication.quit()
