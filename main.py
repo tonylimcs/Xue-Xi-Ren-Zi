@@ -1,8 +1,7 @@
 from PySide6.QtWidgets import *
 from gui.main_window import MainWindow
-import sys
 
 
 if __name__ == "__main__":
-    window = MainWindow(QApplication(sys.argv))
+    window = MainWindow(QApplication())
     window.start_app()
