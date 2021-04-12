@@ -1,26 +1,23 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
-from gui.widgets.body import Body
-from gui.widgets.pinyin_input import PinyinInput
-from gui.widgets.side_column import SideColumn
-
 from backend.model.classes import handler
 from backend.model.constants.event_types import *
 
-from gui.frames.upper_frame import UpperFrame
+from gui.frames.top_frame import TopFrame
+from gui.frames.bottom_frame import BottomFrame
 
 
-class MainFrame(UpperFrame):
+class MainFrame(TopFrame, BottomFrame):
     def __init__(self):
         super().__init__()
         self.layout = QVBoxLayout()
 
-        self.layout.addLayout(self.upper_layout)
+        self.layout.addLayout(self.top_layout)
+        self.layout.addLayout(self.bottom_layout)
 
         # Set This Layout
         self.setLayout(self.layout)
-        self.installEventFilter(self)
 
         handler.handle(self, event=GUI_INIT)
 
@@ -29,11 +26,14 @@ class MainFrame(UpperFrame):
             key = event.key()
             if key == Qt.Key_Return:
                 handler.handle(self, event=USER_INPUT)
-                self.pinyin_input.line_edit.setText("")     # Reset
+                self.clear_input()
                 return True
 
             if key == Qt.Key_Escape:
-                self.setText("")
+                self.clear_input()
                 return True
 
         return False
+
+    def clear_input(self):
+        self.pinyin_input.line_edit.clear()
