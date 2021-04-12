@@ -1,0 +1,67 @@
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+
+from gui.widgets.label import Label
+from gui.widgets.text_box import TextBox
+from gui.font import size
+
+
+class _Label(Label):
+    def __init__(self):
+        super().__init__()
+
+        self.alignment = Qt.AlignCenter
+        self.font_size = size.SIDE_HEADER
+
+
+class _TextBox(TextBox):
+    def __init__(self):
+        super().__init__()
+
+        self.font_size = size.SIDE_MEANING
+        self.read_only = True
+
+
+class SideColumn(QFrame):
+    def __init__(self):
+        super().__init__()
+
+        self.widget_pairs = self.__create_widget_pairs(2)
+
+        self.grid = QGridLayout()
+        self.grid.setVerticalSpacing(0)
+        self.__add_widgets()
+
+        self.setLayout(self.grid)
+
+        self.is_minimized = False
+        # self.setMinimumWidth(self.width() / 16)
+        self.setMaximumWidth(int(self.width() / 4))
+
+        self.setStyleSheet("background: white;")
+
+        self.installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.Resize:
+            if self.is_minimized:
+                self.setFixedWidth(self.minimumWidth())     # Minimize
+                self.is_minimized = True
+            else:
+                self.setFixedWidth(self.maximumWidth())     # Maximize
+                self.is_minimized = False
+            return True
+
+        return False
+
+    @staticmethod
+    def __create_widget_pairs(num_of_pairs: int) -> list:
+        return [(_Label(), _TextBox()) for _ in range(num_of_pairs)]
+
+    def __add_widgets(self):
+        row = 0
+        for tuples in self.widgets:
+            for widget in tuples:
+                self.grid.addWidget(widget, row, 0)
+                row += 1
