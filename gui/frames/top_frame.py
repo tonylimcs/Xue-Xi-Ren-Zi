@@ -9,8 +9,6 @@ class TopFrame(QFrame):
     def __init__(self):
         super().__init__()
 
-        self.top_layout = QVBoxLayout()
-
         self.body = Body()
         self.side_col = SideColumn()
 
@@ -19,4 +17,5 @@ class TopFrame(QFrame):
         self.splitter.addWidget(self.side_col)
         self.splitter.setHandleWidth(10)
 
+        self.top_layout = QVBoxLayout()
         self.top_layout.addWidget(self.splitter)

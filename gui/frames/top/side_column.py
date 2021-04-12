@@ -30,16 +30,14 @@ class SideColumn(QFrame):
         self.widget_pairs = self.__create_widget_pairs(2)
 
         self.grid = QGridLayout()
+        self.__add_widget_pairs(self.grid)
         self.grid.setVerticalSpacing(0)
-        self.__add_widgets()
 
         self.setLayout(self.grid)
 
         self.is_minimized = False
-        # self.setMinimumWidth(self.width() / 16)
-        self.setMaximumWidth(int(self.width() / 4))
 
-        self.setStyleSheet("background: white;")
+        self.setMaximumWidth(int(self.width() / 4))
 
         self.installEventFilter(self)
 
@@ -59,9 +57,9 @@ class SideColumn(QFrame):
     def __create_widget_pairs(num_of_pairs: int) -> list:
         return [(_Label(), _TextBox()) for _ in range(num_of_pairs)]
 
-    def __add_widgets(self):
+    def __add_widget_pairs(self, grid_: QGridLayout) -> None:
         row = 0
-        for tuples in self.widgets:
+        for tuples in self.widget_pairs:
             for widget in tuples:
-                self.grid.addWidget(widget, row, 0)
+                grid_.addWidget(widget, row, 0)
                 row += 1

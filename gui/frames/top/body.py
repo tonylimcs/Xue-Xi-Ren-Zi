@@ -17,7 +17,7 @@ class Body(QScrollArea):
     def __init__(self):
         super().__init__()
 
-        # making widget resizable
+        # making parent resizable
         self.setWidgetResizable(True)
 
         # making QWidget object
