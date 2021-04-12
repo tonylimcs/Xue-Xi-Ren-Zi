@@ -1,2 +1,0 @@
-STYLE = 'Arial'
-BODY_SIZE = 20
